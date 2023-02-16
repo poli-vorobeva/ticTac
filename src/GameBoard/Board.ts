@@ -10,14 +10,22 @@ export class Board extends Control {
 	constructor(parent: HTMLElement, playerShape: 'circle' | 'cross', images: typeImagesData) {
 		super(parent, 'div', '', 'BAORD');
 		const game = new GameController(playerShape)
-
+		game.onPlayerTurn = (shape:string,coords:{x:number,y:number}) => {
+			console.log("PLAER turn")
+			this.canvasComponent.drawShapeOnCanvas(shape,coords)
+			game.botNext()
+		}
+		game.onBotTurn = (shape:string,coords:{x:number,y:number}) => {
+			console.log("Bot turn")
+			this.canvasComponent.drawShapeOnCanvas(shape,coords)
+		}
 		this.canvasComponent = new CanvasComponent(this.node, images)
-		this.canvasComponent.onClickedCell=(cell)=>{
+		this.canvasComponent.onClickedCell = (cell) => {
 			game.clickCell(cell)
 		}
-		if(game.turn()==='player'){
+		if (game.turn() === 'player') {
 			this.canvasComponent.listenClick()
-			new Control(this.node,'h3','',`It's your turn`)
+			new Control(this.node, 'h3', '', `It's your turn`)
 		}
 		//random active attack
 		//write who is active

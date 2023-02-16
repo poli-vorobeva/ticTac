@@ -15,7 +15,7 @@ function imageObj(data:{name:string,size:number}) {
 	})
 }
 
-const imgNames = [{name:'bg',size:300}, {name:'circle',size:70}, {name:'cross',size:70}]
+const imgNames = [{name:'bg',size:300}, {name:'circle',size:100}, {name:'cross',size:100}]
 const preload = () => {
 	return new Promise((res, rej) => {
 		const all = Promise.all(imgNames.map(c =>(imageObj(c))))
