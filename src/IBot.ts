@@ -5,7 +5,6 @@ export class IBot {
 	}
 
 	turn(emptyCells: Set<string>) {
-		console.log('bot turn')
 		setTimeout(()=> {
 			this.onBotTurn(this.randomCell(emptyCells.size))
 		},1000)

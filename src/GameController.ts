@@ -10,6 +10,7 @@ export class GameController {
 	private botOccupied: number;
 	private bot: IBot;
 	private emptyCells: Set<string>;
+	onFinishedGame: (winner: string) => void
 	onBotTurn: (shape: string, coords: { x: number, y: number }) => void
 	private activeCell: { x: number, y: number };
 
@@ -26,11 +27,11 @@ export class GameController {
 		this.playerShape = shape
 		this.bot = new IBot()
 		this.bot.onBotTurn = (cellIndex) => {
-			console.log("***Bot")
 			const [y, x] = Array.from(this.emptyCells)[cellIndex].split('-')
 			this.occupiedCell({x: +x, y: +y})
 			this.changeActivePlayer()
 			this.onBotTurn(this.botShape, this.getPixels({x: +x, y: +y}))
+			this.isFinish(this.botOccupied)
 		}
 		this.activeCell = null
 		this.botShape = shape === 'circle' ? 'cross' : 'circle'
@@ -44,9 +45,6 @@ export class GameController {
 	}
 
 	isEmpty(cell: { x: number; y: number }) {
-		console.log(this.matrix)
-		console.log(cell.y,'--',cell.x)
-		console.log(this.matrix[cell.y][cell.x])
 		return this.matrix[cell.y][cell.x] === 0
 	}
 
@@ -56,9 +54,7 @@ export class GameController {
 	}
 
 	changeActivePlayer() {
-		console.log("activePrev--", this.activePlayer)
 		this.activePlayer = this.activePlayer === 'player' ? 'bot' : 'player'
-		console.log("activeCur--", this.activePlayer)
 	}
 
 	turnDefine() {
@@ -74,6 +70,36 @@ export class GameController {
 		return {x: c.x * 100, y: c.y * 100}
 	}
 
+	checkHorizontal(val: number) {
+		return this.matrix.some(r => r.every(c => c === val))
+	}
+
+	checkVerticals(val: number) {
+		return this.matrix.some((col, colI) => {
+			return col.every((row, rowI) => this.matrix[rowI][colI] == val)
+		})
+	}
+
+	diagonalF(data: string[], val: number) {
+		return data.every(e => {
+			const d = e.split('-')
+			return this.matrix[+d[0]][+d[1]] === val
+		})
+	}
+
+	checkDiagonals(val: number) {
+		const m = this.diagonalF(['0-0', '1-1', '2-2'], val)
+		if (m) return m
+		return this.diagonalF(['0-2', '1-1', '2-0'], val)
+	}
+
+	isFinish(val: number) {
+		const h = this.checkHorizontal(val)
+		const v = this.checkVerticals(val)
+		const d = this.checkDiagonals(val)
+		h||v||d && this.onFinishedGame(val === 8 ? 'bot' : 'player')
+	}
+
 	clickCell(cell: { x: number; y: number }) {
 		if (this.activePlayer !== 'player') return
 		if (this.isEmpty(cell)) {
@@ -81,6 +107,7 @@ export class GameController {
 			this.occupiedCell(cell)
 			this.turnDefine()
 			this.changeActivePlayer()
+			this.isFinish(this.playerOccupied)
 		}
 
 	}

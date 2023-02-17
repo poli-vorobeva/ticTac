@@ -6,10 +6,14 @@ import {GameController} from "../GameController";
 export class Board extends Control {
 	private game: GameController;
 	private canvasComponent: CanvasComponent;
-
+	onFinishedGame:(winner:string)=>void
 	constructor(parent: HTMLElement, playerShape: 'circle' | 'cross', images: typeImagesData) {
 		super(parent, 'div', '', 'BAORD');
 		const game = new GameController(playerShape)
+		game.onFinishedGame=(winner:string)=>{
+			console.log(winner)
+			this.onFinishedGame(winner)
+		}
 		game.onPlayerTurn = (shape:string,coords:{x:number,y:number}) => {
 			console.log("PLAER turn")
 			this.canvasComponent.drawShapeOnCanvas(shape,coords)

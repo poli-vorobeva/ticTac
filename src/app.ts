@@ -14,9 +14,15 @@ export class App extends Control {
 		this.startButton = new Control(this.node, 'button', '', 'START')
 
 		this.startButton.node.onclick = () => {
+			if (this.board) return
 			const chooseShape = new ChooseShape(this.node, images)
 			chooseShape.onChooseShape=(shape:'circle'|'cross')=>{
 				this.board = new Board(this.node, shape, images)
+				this.board.onFinishedGame=(winner:string)=>{
+					this.board.destroy()
+					this.board=null
+					new Control(this.node,'h4','',`${winner} is the winner`)
+				}
 				chooseShape.destroy()
 			}
 		}

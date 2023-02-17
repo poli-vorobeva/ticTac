@@ -15,16 +15,13 @@ export class CanvasComponent extends Control<HTMLCanvasElement> {
 		this.ctx.fillRect(0, 0, this.node.width, this.node.width)
 		this.images=images
 		const bg= images.find(el=> el.name=='bg')
-
-		// images.forEach((imgD) => {
 		 	this.ctx.drawImage(bg.img, 0, 0, bg.size, bg.size)
-		// })
+
 	}
 
 	listenClick() {
 		this.node.onclick=(e)=> {
 			const {x,y}=this.getCoord(e)
-
 			this.onClickedCell(this.getCell(x, y))
 		}
 	}
@@ -35,10 +32,6 @@ getCoord(e:MouseEvent){
 	return{x,y}
 }
 	getCell(x:number,y:number){
-		console.log(x,y,'------CANVAS COORD')
-		console.log(x/100,y/100)
-
-		console.log("CELL-",Math.floor(x / 100),Math.floor(y / 100))
 		return {x:Math.floor(x / 100), y:Math.floor(y / 100)}
 	}
 
