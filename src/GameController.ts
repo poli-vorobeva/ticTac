@@ -13,7 +13,7 @@ export class GameController {
 	onFinishedGame: (winner: string) => void
 	onBotTurn: (shape: string, coords: { x: number, y: number }) => void
 	private activeCell: { x: number, y: number };
-
+	onDeadHeat:()=>void
 	constructor(shape: 'circle' | 'cross') {
 		this.matrix = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 		this.emptyCells = new Set()
@@ -32,10 +32,14 @@ export class GameController {
 			this.changeActivePlayer()
 			this.onBotTurn(this.botShape, this.getPixels({x: +x, y: +y}))
 			this.isFinish(this.botOccupied)
+			if(this.isDeadHeat()) this.onDeadHeat()
 		}
 		this.activeCell = null
 		this.botShape = shape === 'circle' ? 'cross' : 'circle'
 		this.activePlayer = this.playerShape === 'cross' ? 'player' : 'bot'
+		if (this.activePlayer === 'bot') {
+			this.bot.turn(this.emptyCells)
+		}
 		this.playerOccupied = 5
 		this.botOccupied = 8
 	}
@@ -97,9 +101,12 @@ export class GameController {
 		const h = this.checkHorizontal(val)
 		const v = this.checkVerticals(val)
 		const d = this.checkDiagonals(val)
-		h||v||d && this.onFinishedGame(val === 8 ? 'bot' : 'player')
+		if(h || v || d) this.onFinishedGame(val === 8 ? 'bot' : 'player')
 	}
 
+	isDeadHeat(){
+		return this.emptyCells.size===0
+	}
 	clickCell(cell: { x: number; y: number }) {
 		if (this.activePlayer !== 'player') return
 		if (this.isEmpty(cell)) {
@@ -108,6 +115,7 @@ export class GameController {
 			this.turnDefine()
 			this.changeActivePlayer()
 			this.isFinish(this.playerOccupied)
+			if(this.isDeadHeat()) this.onDeadHeat()
 		}
 
 	}
