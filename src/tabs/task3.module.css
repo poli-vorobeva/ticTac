@@ -1,0 +1,22 @@
+.task3{
+    padding: 10px;
+    text-align: justify;
+}
+.task3 h3{
+    margin: 10px;
+}
+.inHt{
+    text-align: center;
+}
+.figure{
+    width: 90%;
+    margin: 5px auto;
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid gray;
+    padding: 10px;
+    text-align: center;
+}
+.bgsWrpr{
+
+}

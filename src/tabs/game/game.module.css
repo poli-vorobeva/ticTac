@@ -1,5 +1,9 @@
 .wrapper {
     padding: 20px;
+    max-width: 1000px;
+    min-width: 300px;
+    margin: 0 auto;
+
 }
 
 .button {
@@ -37,6 +41,7 @@
     width: 100%;
     max-width: 500px;
     justify-content: space-evenly;
+    margin: 0 auto;
 }
 
 .chooseButton {
