@@ -1,0 +1,53 @@
+.wrapper {
+    padding: 20px;
+}
+
+.button {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 5px #676060;
+    transition: all 200ms ease;
+}
+
+.button:hover {
+    box-shadow: 0 0 5px 2px #555050;
+}
+
+.chooseWrapper {
+    padding: 20px;
+    background: rgba(112, 103, 103, 0.53);
+    border-radius: 6px;
+}
+
+.chooseWrapper h3 {
+    color: #242b4a;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+}
+
+.buttonsWrapper {
+    display: flex;
+    width: 100%;
+    max-width: 500px;
+    justify-content: space-evenly;
+}
+
+.chooseButton {
+    width: 150px;
+    padding: 20px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.5);
+    transition: all 300ms ease-in;
+}
+.chooseButton:hover{
+    background: rgba(192, 255, 224, 0.67);
+}

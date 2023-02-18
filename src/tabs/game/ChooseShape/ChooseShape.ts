@@ -1,17 +1,19 @@
-import Control from "../controll";
-import {typeImagesData} from "../app";
+import Control from "../../../controll";
+import {typeImagesData} from "../../../app";
+import styles from '../game.module.css'
 import {Shape} from "./Shape";
 
 export class ChooseShape extends Control {
 	onChooseShape:(shape:string)=>void
 	constructor(parent: HTMLElement, images: typeImagesData) {
-		super(parent, 'div');
+		super(parent, 'div',styles.chooseWrapper);
 		this.node.innerHTML = `<h3>Choose the shape</h3>`
 		const cross = images.find(e => e.name === 'cross')
 		const circle = images.find(e => e.name === 'circle')
-		const crossBtn = new Shape(this.node,cross)
+		const buttonsWrapper= new Control(this.node,'div',styles.buttonsWrapper)
+		const crossBtn = new Shape(buttonsWrapper.node,cross)
 		crossBtn.onChooseShape=(shape)=>this.onChooseShape(shape)
-		const circleBtn = new Shape(this.node,circle)
+		const circleBtn = new Shape(buttonsWrapper.node,circle)
 		circleBtn.onChooseShape=(shape)=>this.onChooseShape(shape)
 	}
 }

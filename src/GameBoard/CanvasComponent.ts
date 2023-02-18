@@ -11,7 +11,7 @@ export class CanvasComponent extends Control<HTMLCanvasElement> {
 		this.node.width = 300
 		this.node.height = 300
 		this.ctx = this.node.getContext('2d')
-		this.ctx.fillStyle = '#333b2a'
+		this.ctx.fillStyle = '#797d74'
 		this.ctx.fillRect(0, 0, this.node.width, this.node.width)
 		this.images=images
 		const bg= images.find(el=> el.name=='bg')

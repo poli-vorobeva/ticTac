@@ -1,7 +1,9 @@
-import Control from "../controll";
-import {ChooseShape} from "../ChooseShape/ChooseShape";
-import {Board} from "../GameBoard/Board";
-import {typeImagesData} from "../app";
+import Control from "../../controll";
+import {Board} from "../../GameBoard/Board";
+import {typeImagesData} from "../../app";
+import styles from './game.module.css'
+import {ChooseShape} from "./ChooseShape/ChooseShape";
+import {FinishScreen} from "../../GameBoard/FinishScreen";
 
 export class Game extends Control {
 	private board: Board;
@@ -9,13 +11,13 @@ export class Game extends Control {
 	private images: typeImagesData;
 
 	constructor(parent: HTMLElement, images: typeImagesData) {
-		super(parent);
+		super(parent,'div',styles.wrapper);
 		this.images = images
 		this.gameCycle()
 	}
 
 	gameCycle() {
-		this.startButton = new Control(this.node, 'button', '', 'START')
+		this.startButton = new Control(this.node, 'button', styles.button, 'START')
 		this.startButton.node.onclick = () => {
 			if (this.board) return
 			this.startButton.destroy()
@@ -24,7 +26,7 @@ export class Game extends Control {
 				this.board = new Board(this.node, shape, this.images)
 				this.board.onDeadHeat = () => {
 					this.board.destroy()
-					const dh = new Control(this.node, 'h2', '', 'its a dead heat')
+					const dh = new FinishScreen(this.node,'its a dead heat')
 					setTimeout(() => {
 						dh.destroy()
 						this.gameCycle()
@@ -33,7 +35,7 @@ export class Game extends Control {
 				this.board.onFinishedGame = (winner: string) => {
 					this.board.destroy()
 					this.board = null
-					const f = new Control(this.node, 'h4', '', `${winner} is the winner`)
+					const f = new FinishScreen(this.node, `${winner} is the winner`)
 					setTimeout(() => {
 						this.gameCycle()
 						f.destroy()

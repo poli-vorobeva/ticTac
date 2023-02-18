@@ -1,11 +1,10 @@
 import Control from "./controll";
-import {Board} from "./GameBoard/Board";
-import {ChooseShape} from "./ChooseShape/ChooseShape";
-import {Game} from "./tabs/Game";
 import Task3 from "./tabs/Task3";
 import Task2 from "./tabs/Task2";
 import Task1 from "./tabs/Task1";
-import {NavComponent} from "./tabs/navComonent";
+import {NavComponent} from "./tabs/nav/navComonent";
+import styles from './app.module.css'
+import {Game} from "./tabs/game/Game";
 
 export type typeImgData = { name: 'bg' | 'circle' | 'cross', img: HTMLImageElement, size: number }
 export type typeImagesData = typeImgData[]
@@ -19,7 +18,7 @@ export class App extends Control {
 	private taskOne: Task1;
 
 	constructor(parent: HTMLElement, images: typeImagesData) {
-		super(parent, 'div');
+		super(parent, 'div',styles.wrapper);
 		this.images = images
 		this.activeTab = 'game'
 		this.nav()

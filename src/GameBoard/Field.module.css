@@ -1,3 +1,11 @@
-.field{
-
+.wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+.finishScreen{
+text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #74172b;
 }
