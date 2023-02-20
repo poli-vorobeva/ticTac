@@ -25,9 +25,9 @@ export class Game extends Control {
 			chooseShape.onChooseShape = (shape: 'circle' | 'cross') => {
 				this.board = new Board(this.node, shape, this.images)
 				this.board.onDeadHeat = () => {
-					this.board.destroy()
-					const dh = new FinishScreen(this.node,'its a dead heat')
 					setTimeout(() => {
+						this.board.destroy()
+						const dh = new FinishScreen(this.node,'its a dead heat')
 						dh.destroy()
 						this.gameCycle()
 					}, 1000)

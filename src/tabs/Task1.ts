@@ -54,7 +54,14 @@ export default class Task1 extends Control {
 			for (let i = 0; i < heads.length; i++) {
 				const w = new Control(linkWrapper.node,'div',styles.miniWrap)
 				new Control(w.node, 'div', styles.linkWrapperHead, heads[i])
-				new Control(w.node,'div',styles.linkWrapperContent,link[i])
+				const t = new Control(w.node,'div',styles.linkWrapperContent,i!==0 ? link[i]:null)
+				if(i===0){
+					console.log(link[i])
+					const a = new Control<HTMLLinkElement>(t.node,'a','','Link...')
+					a.node.href=link[i]
+					a.node.target='_blank'
+
+				}
 			}
 		})
 
